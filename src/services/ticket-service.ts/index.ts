@@ -19,7 +19,7 @@ if (!enrollment) {
  if(!result || result.length === 0) {
   throw notFoundError();
  }
- return result;
+ return result[0];
 }
 
 

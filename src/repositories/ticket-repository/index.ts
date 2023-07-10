@@ -6,12 +6,10 @@ import { Ticket, TicketStatus, TicketType } from "@prisma/client";
     return await prisma.ticketType.findMany(); 
  }
 
- async function getTicketsByUser(userId: number ){
+ async function getTicketsByUser(enrollmentId: number ){
     return await prisma.ticket.findMany({
         where:{
-            Enrollment:{
-                userId
-            }
+            enrollmentId
         },
         include:{
             TicketType: true
@@ -44,27 +42,12 @@ import { Ticket, TicketStatus, TicketType } from "@prisma/client";
     });
   
   } 
-async function updateTicket (tickedId:number,status:TicketStatus){
-
-  return await prisma.ticket.updateMany({
-    where: {
-      id:tickedId
-    },
-    data: {
-      status
-    }
-
-  })
-
-}
-
   const ticketRepository = {
       
     getTicketTypesByRepository,
     getTicketsByUser,
     createTicketByRepository,
     getTicketById,
-    updateTicket
   };
   
   export default ticketRepository;

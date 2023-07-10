@@ -43,9 +43,10 @@ async function createPayment(req: Request & { userId: number }, res: Response){
   }catch(err){
      if(err.name ===' NotFoundError'){
        return res.sendStatus(httpStatus.NOT_FOUND);
-      } else {
-       return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
-     }
+  } if(err.name === 'UnauthorizedError'){
+      return res.sendStatus(httpStatus.UNAUTHORIZED);
+    }
+    res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
   }
 }
 
