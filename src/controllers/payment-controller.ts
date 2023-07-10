@@ -28,12 +28,12 @@ try{
 async function createPayment(req: Request & { userId: number }, res: Response){
     const { userId } = req;
     const { ticketId, cardData } = req.body;
-    if(!ticketId || !cardData) return res.sendStatus(httpStatus.BAD_REQUEST);
-  console.log(ticketId,'ticketId');
+    if(!ticketId || !cardData ) return res.sendStatus(httpStatus.BAD_REQUEST);
+  console.log(cardData,'cardData.cardIssuer');
   try{
     const payment = await paymentService.createPayment(userId,{
         ticketId,
-        cardIssuer: cardData.cardIssuer,
+        cardIssuer: cardData.issuer,
         cardLastDigits: cardData.number.slice(-4),
          
     });
@@ -41,7 +41,7 @@ async function createPayment(req: Request & { userId: number }, res: Response){
    console.log(update,'update');
     res.status(httpStatus.OK).send(payment);
   }catch(err){ 
-    console.log(err.data,'err');
+    console.log(err,'err');
      if(err.name ===' NotFoundError'){
        return res.sendStatus(httpStatus.NOT_FOUND);
   } if(err.name === 'UnauthorizedError'){
