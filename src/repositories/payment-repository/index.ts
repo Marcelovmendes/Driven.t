@@ -13,23 +13,26 @@ async function getPaymentByTicketId(ticketId: number) {
 }   
 
 async function createPayment(cardData: cardData) {
-    return await prisma.payment.create({ 
-         data: cardData
-         });
-        
-}
-
-
-export function updatePaid ( userId:number) {
-    return prisma.ticket.updateMany({
-        where: {
-            enrollmentId: userId
-        },
+    const { ticketId, value, cardIssuer, cardLastDigits } = cardData;  
+    
+    return await prisma.payment.create({
         data: {
-            status: TicketStatus.PAID
-        }
-    })
+          Ticket: { connect: { id: ticketId } },
+          value,
+          cardIssuer,
+          cardLastDigits,
+        },
+      });
 }
+
+async function updatePaid(id: number) {
+    return prisma.ticket.update({
+      where: { id },
+      data: { status: TicketStatus.PAID },
+    });
+  }
+
+
 const paymentRepository = {
     getPaymentByTicketId,
     createPayment,

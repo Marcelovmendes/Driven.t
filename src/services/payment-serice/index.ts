@@ -15,17 +15,18 @@ async function getPayment(ticketId:number, userId:number){
    return payment;
 }
 
-async function createPayment(body:{ticketId:number;cardIssuer:string;cardLastDigits:string}){
+async function createPayment(userId: number,body:{ticketId:number;cardIssuer:string;cardLastDigits:string}){
 
   const ticket = await ticketRepository.getTicketById(body.ticketId) 
+  console.log(ticket,'ticket')
   if(!ticket) throw notFoundError()
-  const enrollment = await enrollmentRepository.findWithAddressByUserId(ticket.enrollmentId);
+  const enrollment = await enrollmentRepository.findWithAddressByUserId(userId);
   console.log(enrollment,'enrollment')
   if (!enrollment )  throw notFoundError();
   if (ticket.enrollmentId !== enrollment.id) throw unauthorizedError();
   
   const payment = await paymentRepository.createPayment({...body,value:ticket.TicketType.price})
-  console.log(payment,'payment');
+  console.log(payment,'payment')
 return payment 
 }
 const paymentService = {

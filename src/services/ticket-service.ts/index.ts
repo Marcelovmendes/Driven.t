@@ -15,7 +15,6 @@ if (!enrollment) {
   throw notFoundError();
 }
  const result = await ticketRepository.getTicketsByUser(enrollment.id);
- console.log(result)
  if(!result || result.length === 0) {
   throw notFoundError();
  }
