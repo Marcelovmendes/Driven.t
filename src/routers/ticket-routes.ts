@@ -5,7 +5,7 @@ import ticketController from '../controllers/ticket-controller'
 
 
 const routerTicket = Router()
-.all('/*', authenticateToken)
+ .use(authenticateToken)
 routerTicket.get('/',ticketController.getTicket)
 routerTicket.get('/types',ticketController.getTicketsType)
 routerTicket.post('/',ticketController.createTicket)

@@ -44,3 +44,9 @@ export type RequestError = {
   name: string;
   message: string;
 };
+export interface RequestWithUserId extends Request {
+  userId: number;
+  query: {
+    ticketId?: string;
+  };
+}
