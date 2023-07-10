@@ -40,7 +40,7 @@ async function createPayment(req: Request & { userId: number }, res: Response){
     res.status(httpStatus.OK).send(payment);
   }catch(err){ 
     console.log(err,'err');
-     if(err.name ===' NotFoundError'){
+     if(err.name ==='NotFoundError'){
        return res.sendStatus(httpStatus.NOT_FOUND);
   } if(err.name === 'UnauthorizedError'){
       return res.sendStatus(httpStatus.UNAUTHORIZED);
