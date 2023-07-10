@@ -22,10 +22,9 @@ async function getTicketsType(req: Request, res: Response) {
      return res.status(httpStatus.OK).send(result);
   } catch(err) { 
     if(err.name === 'NotFoundError'){
-      console.log(err,'notfound')
-      return res.sendStatus(httpStatus.NOT_FOUND);
+    return res.sendStatus(httpStatus.NOT_FOUND);
     }else{
-      return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+    return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
     }
   }
  }

@@ -29,7 +29,6 @@ async function createPayment(req: Request & { userId: number }, res: Response){
     const { userId } = req;
     const { ticketId, cardData } = req.body;
     if(!ticketId || !cardData ) return res.sendStatus(httpStatus.BAD_REQUEST);
-  console.log(cardData,'cardData.cardIssuer');
   try{
     const payment = await paymentService.createPayment(userId,{
         ticketId,
@@ -37,8 +36,7 @@ async function createPayment(req: Request & { userId: number }, res: Response){
         cardLastDigits: cardData.number.slice(-4),
          
     });
-   const update=  await paymentRepository.updatePaid(ticketId);
-   console.log(update,'update');
+ await paymentRepository.updatePaid(ticketId);
     res.status(httpStatus.OK).send(payment);
   }catch(err){ 
     console.log(err,'err');

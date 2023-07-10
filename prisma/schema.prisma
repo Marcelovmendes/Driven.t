@@ -18,7 +18,7 @@ model User {
   updatedAt  DateTime     @updatedAt
   Session    Session[]
   Enrollment Enrollment[]
-  @@map("user")
+
 }
 
 model Session {
@@ -28,7 +28,7 @@ model Session {
   token     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  @@map("session")
+
 }
 
 model Event {
@@ -40,7 +40,7 @@ model Event {
   endsAt             DateTime
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
-  @@map("event")
+
 }
 
 model Enrollment {
@@ -55,7 +55,7 @@ model Enrollment {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Ticket    Ticket[]
-  @@map("enrollment")
+
 }
 
 model Address {
@@ -71,7 +71,7 @@ model Address {
   Enrollment    Enrollment @relation(fields: [enrollmentId], references: [id])
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
-  @@map("address")
+
 }
 
 
@@ -84,7 +84,6 @@ model TicketType {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   Ticket        Ticket[]
-  @@map("ticketType")
 }
 
 model Ticket {
@@ -97,13 +96,13 @@ model Ticket {
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
   Payment      Payment[]
-  @@map("ticket")
+
 }
 
 enum TicketStatus {
   RESERVED
   PAID
-  @@map("ticketStatus")
+
 }
 
 model Payment {
@@ -115,5 +114,4 @@ model Payment {
   cardLastDigits String
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
-  @@map("payment")
 }

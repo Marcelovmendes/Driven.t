@@ -21,12 +21,11 @@ async function createPayment(userId: number,body:{ticketId:number;cardIssuer:str
   console.log(ticket,'ticket')
   if(!ticket) throw notFoundError()
   const enrollment = await enrollmentRepository.findWithAddressByUserId(userId);
-  console.log(enrollment,'enrollment')
   if (!enrollment )  throw notFoundError();
   if (ticket.enrollmentId !== enrollment.id) throw unauthorizedError();
   
   const payment = await paymentRepository.createPayment({...body,value:ticket.TicketType.price})
-  console.log(payment,'payment')
+
 return payment 
 }
 const paymentService = {
