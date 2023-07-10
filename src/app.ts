@@ -19,8 +19,8 @@ app
   .use('/auth', authenticationRouter)
   .use('/event', eventsRouter)
   .use('/enrollments', enrollmentsRouter)
-  .use('tickets',routerTicket)
-  .use('payment',paymentRouter)
+  .use('/tickets',routerTicket)
+  .use('/payments',paymentRouter)
   .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {

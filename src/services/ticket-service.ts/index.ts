@@ -8,14 +8,15 @@ async function getTicketsType(){
  return result;
 }
 
-async function getTicket( userId: number){  
+async function getTicketUser( userId: number){  
 
 const enrollment = await enrollmentRepository.findWithAddressByUserId(userId);
 if (!enrollment) {
   throw notFoundError();
 }
  const result = await ticketRepository.getTicketsByUser(enrollment.id);
- if(!result) {
+ console.log(result)
+ if(!result || result.length === 0) {
   throw notFoundError();
  }
  return result;
@@ -32,8 +33,9 @@ if (!enrollment) {
 }
 const ticketService = {
   getTicketsType,
-  getTicket,
-  createTicket
+  getTicketUser,
+  createTicket,
+
 }
 
 export default ticketService

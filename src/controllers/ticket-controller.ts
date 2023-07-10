@@ -8,7 +8,6 @@ async function getTicketsType(req: Request, res: Response) {
      const result = await ticketService.getTicketsType();
 
    res.status(httpStatus.OK).send(result);
-  console.log(result )
    } catch (err) {
      return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
    }
@@ -16,15 +15,19 @@ async function getTicketsType(req: Request, res: Response) {
  
 
 
-async function getTicket( req: AuthenticatedRequest, res: Response) {
-   const { userId} = req;
-    try{
-      const result = await ticketService.getTicket(userId);   
-      return res.status(httpStatus.OK).send(result);
-   }catch(err){ 
-   (err.name =='NotFoundError')? res.sendStatus(httpStatus.NOT_FOUND):res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
-   }
-}
+ async function getTicket(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+  try {
+     const result = await ticketService.getTicketUser(userId);   
+     return res.status(httpStatus.OK).send(result);
+  } catch(err) { 
+    if(err.name === 'NotFoundError'){
+      return res.sendStatus(httpStatus.NOT_FOUND);
+    }else{
+      return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+ }
 async function createTicket (req:AuthenticatedRequest,res:Response){
      const {ticketTypeId} = req.body;
      const {userId} = req;
@@ -35,7 +38,8 @@ async function createTicket (req:AuthenticatedRequest,res:Response){
       const result = await ticketService.createTicket( ticketTypeId, userId);
       return res.status(httpStatus.CREATED).send(result);
     }catch(err){
-   (err.name == 'RequestError')? res.sendStatus(httpStatus.BAD_REQUEST):res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
+
+   (err.name == 'RequestError')? res.sendStatus(httpStatus.BAD_REQUEST):res.sendStatus(httpStatus.NOT_FOUND);
        
     }
 }

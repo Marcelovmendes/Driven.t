@@ -50,3 +50,9 @@ export interface RequestWithUserId extends Request {
     ticketId?: string;
   };
 }
+export type cardData = {
+  ticketId: number;
+  value: number;
+  cardIssuer: string;
+  cardLastDigits: string;
+};
