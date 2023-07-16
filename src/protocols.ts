@@ -1,3 +1,6 @@
+
+import { Payment, Ticket } from '@prisma/client';
+
 export type ApplicationError = {
   name: string;
   message: string;
@@ -55,4 +58,5 @@ export type cardData = {
   value: number;
   cardIssuer: string;
   cardLastDigits: string;
-};
+}
+
