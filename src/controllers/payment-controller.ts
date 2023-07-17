@@ -39,7 +39,6 @@ async function createPayment(req: Request & { userId: number }, res: Response){
  await paymentRepository.updatePaid(ticketId);
     res.status(httpStatus.OK).send(payment);
   }catch(err){ 
-    console.log(err,'err');
      if(err.name ==='NotFoundError'){
        return res.sendStatus(httpStatus.NOT_FOUND);
   } if(err.name === 'UnauthorizedError'){
