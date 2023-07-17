@@ -4,4 +4,5 @@ export * from './events-router';
 export * from './enrollments-router';
 export * from './ticket-routes'
 export * from './payment-router';
+export * from './hotels-router'
 
