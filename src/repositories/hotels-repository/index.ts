@@ -1,4 +1,5 @@
 import { prisma } from "../../config";
+import { notFoundError } from "../../errors";
 
 async function  getHotels () {
 
@@ -14,6 +15,9 @@ async function getRooms(hotelId: number) {
           Rooms: true,
         },
       });
+      if(!hotelWithRooms || hotelWithRooms.Rooms.length === 0) { 
+        throw notFoundError();
+      }
       return {
         id: hotelWithRooms.id,
         name: hotelWithRooms.name,

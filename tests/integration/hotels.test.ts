@@ -63,7 +63,7 @@ import { createHotels } from '../factories/hotels-factory';
           const token = await generateValidToken(user);
           const enrollment = await createEnrollmentWithAddress(user);
           const ticketTypeInPerson= await createTicketTypeInPerson();
-          const ticket = await createTicket(enrollment.id,ticketTypeInPerson.id,TicketStatus.PAID);
+          await createTicket(enrollment.id,ticketTypeInPerson.id,TicketStatus.PAID);
           const {status} = await api.get("/hotels").set("Authorization", `Bearer ${token}`);
           expect(status).toEqual(httpStatus.NOT_FOUND);
 
@@ -86,15 +86,13 @@ import { createHotels } from '../factories/hotels-factory';
           const hotel = await createHotels();
           const {status, body} = await api.get("/hotels").set("Authorization", `Bearer ${token}`);
           expect(status).toEqual(httpStatus.OK);
-          console.log(body,'body');
-          console.log(hotel,'hotel');
           expect(body).toEqual(expect.arrayContaining([
             expect.objectContaining({
                 id:hotel.id,
                 name:hotel.name,
                 image:hotel.image,
-                createdAt:hotel.createdAt,
-                updatedAt:hotel.updatedAt
+                createdAt:hotel.createdAt.toISOString(),
+                updatedAt:hotel.updatedAt.toISOString(),
             })
           ]),
           );
@@ -131,17 +129,24 @@ import { createHotels } from '../factories/hotels-factory';
        const {status} = await api.get("/hotels/1").set("Authorization", `Bearer ${token}`);
        expect(status).toBe(httpStatus.NOT_FOUND);
     })
-    it("Should responde with hotel data.", async ()=>{
-        const user = await createUser();
-        const token = await generateValidToken(user);
-        const enrollment = await createEnrollmentWithAddress(user);
-        const ticketType = await createTicketTypeInPerson();
-        const ticket = await createTicket(enrollment.id,ticketType.id,TicketStatus.PAID);
-        const hotel = await createHotels();
-        const {status, body} = await api.get(`/hotels/${hotel.id}`).set("Authorization", `Bearer ${token}`);
-        expect(status).toEqual(httpStatus.OK);
-        expect(body).toEqual({
-            hotel
+        it("Should responde with hotel data.", async ()=>{
+            const user = await createUser();
+            const token = await generateValidToken(user);
+            const enrollment = await createEnrollmentWithAddress(user);
+            const ticketType = await createTicketTypeInPerson();
+            const ticket = await createTicket(enrollment.id,ticketType.id,TicketStatus.PAID);
+            const hotel = await createHotels();
+            const {status, body} = await api.get(`/hotels/${hotel.id}`).set("Authorization", `Bearer ${token}`);
+            expect(status).toEqual(httpStatus.OK);
+            expect(body).toMatchObject({
+                ...hotel,
+                createdAt: hotel.createdAt.toISOString(),
+                updatedAt: hotel.updatedAt.toISOString(),
+                Rooms: hotel.Rooms.map(room => ({
+                  ...room,
+                  createdAt: room.createdAt.toISOString(),
+                  updatedAt: room.updatedAt.toISOString()
+                }))
+              });
         })
-    })
     })

@@ -22,7 +22,7 @@ export async function createHotels() {
   ];
   const hotelName = faker.company.companyName();
   const hotelImage = faker.image.business();
-  try {
+
     const createdHotel = await prisma.hotel.create({
       data: {
         name: hotelName,
@@ -39,7 +39,4 @@ export async function createHotels() {
     });
 
     return createdHotel;
-  } catch (error) {
-    throw new Error('Failed to create hotels factury.');
-  }
 }

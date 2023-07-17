@@ -27,7 +27,7 @@ import hotelsService from "../services/hotels-service";
         const rooms = await hotelsService.getRoomsByHotel(hotelId,userId);
         return res.status(httpStatus.OK).send(rooms);
     } catch (e) {
-        console.log(e, "erro")
+       console.log(e,'error getRooms')
       if(e.name === 'NotFoundError')return res.sendStatus(httpStatus.NOT_FOUND);
       if(e.name === 'UnauthorizedError')return res.sendStatus(httpStatus.UNAUTHORIZED);
       if(e.name === 'PaymentRequiredError')return res.sendStatus(httpStatus.PAYMENT_REQUIRED);
