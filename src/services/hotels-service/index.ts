@@ -1,3 +1,4 @@
+
 import hotelsRepository from "../../repositories/hotels-repository";
 import { notFoundError } from "../../errors";
 import enrollmentRepository from "../../repositories/enrollment-repository";

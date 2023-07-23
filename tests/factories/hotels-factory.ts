@@ -39,4 +39,5 @@ export async function createHotels() {
     });
 
     return createdHotel;
+
 }
