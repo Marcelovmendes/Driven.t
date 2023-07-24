@@ -60,3 +60,6 @@ export type cardData = {
   cardLastDigits: string;
 }
 
+export type InputTicketbody ={
+  ticketTypeId: number;
+}

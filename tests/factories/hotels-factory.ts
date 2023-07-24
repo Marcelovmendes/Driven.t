@@ -41,3 +41,12 @@ export async function createHotels() {
     return createdHotel;
 
 }
+export async function createRooms(hotelId: number, capacity: number) {
+  return prisma.room.create({
+    data: {
+      hotelId,
+      name: faker.animal.bird(),
+      capacity,
+    },
+  });
+}

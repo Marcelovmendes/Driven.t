@@ -24,7 +24,7 @@ app
   .use('/tickets',routerTicket)
   .use('/payments',paymentRouter)
   .use('/hotels', hotelsRouter)
-  .use('/bookin',bookingsRouter )
+  .use('/bookings',bookingsRouter )
   .use(handleApplicationErrors);
 
 export function init(): Promise<Express> {
